@@ -1,6 +1,5 @@
 //base game player
 const gamePlayer = (() => {
-    let turnCount = 9;
     const playerOne = player('Player1');
     const playerTwo = player('Player2');
     let winner = false
@@ -32,10 +31,14 @@ const gamePlayer = (() => {
                 if (gameBoard[element[0]]===whichPlayer && gameBoard[element[1]]===whichPlayer && gameBoard[element[2]]===whichPlayer) {
                     console.log('winner');
                     winner = true;
-                    turnCount = 0;
                     console.log(winner)
                 }
             }) 
+        };
+        function isTie() {
+            if (count === 9 && winner === false){
+                console.log('tie')
+            }
         };
         function whosTurn(_newImg) {
             if (count %2 === 0){
@@ -46,16 +49,17 @@ const gamePlayer = (() => {
                 whichPlayer = gamePlayer.playerTwo.playerSymbol();
             }
             count++ 
+            console.log(count)
             return img;
         }
 
     return {
-        turnCount,
         playerOne,
         playerTwo,
         winningConditions,
         checkWinner,
-        whosTurn
+        whosTurn,
+        isTie
     }
 })();
 
@@ -76,40 +80,10 @@ const displayController = (() => {
             newBox.appendChild(_newImg);
             gameBoard[dataAlert] = whichPlayer;
             gamePlayer.checkWinner();
+            gamePlayer.isTie();
         }, {once:true})
     };
 })();
-
-
-//display controller
-// const displayController = (() => {
-//         const individualSquares = document.querySelectorAll('.box')
-//         for (const newBox of individualSquares){
-//             newBox.addEventListener('click', () => {
-//                 gamePlayer.turnCount -= 1;
-//                 console.log(gamePlayer.turnCount);
-//                 let dataAlert = newBox.dataset.indexNumber
-//                 let _newImg = document.createElement('img')
-//                     _whosTurn(_newImg);
-//                     newBox.appendChild(_newImg);
-//                     gameBoard[dataAlert] = whichPlayer;
-//                     gamePlayer.checkWinner();
-//             }, {once:true})
-//         };
-//     let count = 0
-//     function _whosTurn(_newImg) {
-//         if (count %2 === 0){
-//             img = _newImg.src="images/TTTX.png";
-//             whichPlayer = gamePlayer.playerOne.playerSymbol();
-//         } else{
-//             img = _newImg.src="images/TTTO.png";
-//             whichPlayer = gamePlayer.playerTwo.playerSymbol();
-//         }
-//         count++ 
-//     }
-// })();
-
-
 
 
 
